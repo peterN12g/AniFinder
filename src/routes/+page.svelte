@@ -1,20 +1,7 @@
 <script context="module">
   import { GoogleGenerativeAI } from "@google/generative-ai";
-
+  import { run } from './+server';
   let query = "";
-  const API_KEY = process.events.API_KEY;
-  const genAI = new GoogleGenerativeAI(API_KEY);
-
-  async function run() { 
-    const model = genAI.getGenerativeModel({ mode: "gemini-pro" });
-
-    const prompt = "Suggest an anime that " + query
-
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    console.log(text);
-}
 
 </script>
 
