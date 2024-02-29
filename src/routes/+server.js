@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { API_KEY } from "$env/static/private";
 
-let query = "";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 export async function GET({url}) {
@@ -12,7 +11,7 @@ export async function GET({url}) {
 
 async function run(query) { 
   const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-001" });
-  const prompt = "Suggest an anime with paragraph formatted description" + query
+  const prompt = "Suggest an anime with a title and 3 descriptive short bullet points in a vertical list format " + query
 
   const result = await model.generateContent(prompt);
   const response = await result.response;
