@@ -1,7 +1,11 @@
 <script context="module">
+  import { HarmBlockThreshold } from "@google/generative-ai";
+
   let query = "";
   let info = "";
   let Loading = false;
+  let genre = "";
+  let number = "";
 
   async function onclick() {
     Loading = true;
@@ -50,12 +54,21 @@
 
 <h1>Welcome to AnimeFinder</h1>
 <p>
-  Describe the type of anime you're in the mood for, and any specific elements you enjoy.
+  <p class="Shows">Select the Number of Anime to Search</p>
+  <form>
+    <label class="radio-inline">
+      <input type="radio" name="optradio" checked>1 Show
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">3 Shows
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">5 Shows
+    </label>
+  </form>
   <input type="text" bind:value={query}>
   <button class="Bind-Query" on:click={onclick} disabled={Loading}>Search</button>
-</p>
 
-<!-- Add a div to display the info -->
 <div id="info-display"></div>
 
 <style>
@@ -81,5 +94,18 @@
     margin-right: auto;
     margin-top: 5px;
     width: 15%;
+  }
+  
+  form{
+    text-align: center;
+    background-color: white;
+    width: 15%;
+  }
+  .radio-inline {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  p.Shows{
+    text-align: left;
   }
 </style>
