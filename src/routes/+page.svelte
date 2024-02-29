@@ -1,26 +1,21 @@
 <script context="module">
-  import { GoogleGenerativeAI } from "@google/generative-ai";
-  import { run } from './+server';
   let query = "";
 
+  async function onclick() {
+    const resp = await fetch("/?" + new URLSearchParams({"prompt": query}));
+    const text = await resp.text();
+  }
 </script>
 
-<html lang="en">
-  <body>
-    <h1>Welcome to AnimeFinder</h1>
-    <p>
-      Describe the type of anime you're in the mood for, and any specific elements you enjoy.
-      <input type="text" bind:value={query}>
-      <button class="Bind-Query" on:click={()=> run(prompt)}>Search</button>
-    </p>
-  </body>
-</html>
+<h1>Welcome to AnimeFinder</h1>
+<p>
+  Describe the type of anime you're in the mood for, and any specific elements you enjoy.
+  <input type="text" bind:value={query}>
+  <button class="Bind-Query" on:click={onclick}>Search</button>
+  
+</p>
 
 <style>
-  body {
-    background-color: purple;
-  }
-
   h1{
     text-align: center;
   }
