@@ -5,8 +5,8 @@
   let info = "";
   let Loading = false;
   let genre = "";
-  let number = "";
-
+  let title = "";
+  
   async function onclick() {
     Loading = true;
     const resp = await fetch("/?" + new URLSearchParams({"prompt": query, "genre": genre}));
@@ -57,7 +57,7 @@ function handleSelectChange(event) {
 <h1>Welcome to AnimeFinder</h1>
 <p>
   <p class="Shows">Select the Genre</p>
-  <form class="showNumber">
+  <form class="genreType">
     <label for="genre">Choose:</label>
     <select bind:value={genre} on:change={handleSelectChange} name="genre" id="showGenre">
       <option value="Action">Action</option>
@@ -96,7 +96,7 @@ function handleSelectChange(event) {
 
   input {
     display: flex;
-    background-color: dimgrey;
+    background-color: darkslategrey;
     margin-right: auto;
     margin-top: 5px;
     width: 15%;
@@ -114,14 +114,30 @@ function handleSelectChange(event) {
     text-align: left;
   }
  
- .showNumber{
+ .genreType{
   margin-right: auto;
+  position: relative;
  }
 
  div#info-display {
     text-align: center;
     margin: 10px auto; 
     width: 100%;
+ }
+
+ form.genreType select {
+  color: white;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+  background-color: darkslategrey;
+ }
+
+ form.genreType option {
+  background-color: darkslategrey;
+  color: white;
  }
 
 </style>

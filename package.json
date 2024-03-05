@@ -16,6 +16,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@google/generative-ai": "^0.2.1"
+		"@google/generative-ai": "^0.2.1",
+		"serpapi": "^2.0.0"
 	}
 }
