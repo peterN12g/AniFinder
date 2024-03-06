@@ -1,5 +1,4 @@
 <script context="module">
-  import { HarmBlockThreshold } from "@google/generative-ai";
 
   let query = "";
   let info = "";
@@ -9,13 +8,28 @@
   
   async function onclick() {
     Loading = true;
-    const resp = await fetch("/?" + new URLSearchParams({"prompt": query, "genre": genre}));
-    const text = await resp.text();
-    info = text;
+    let responseInfo;  
 
-    const formattedInfo = formatApiResponse(info);
-    updateInfoOnPage(formattedInfo);
-    Loading = false; 
+    try {
+      const resp = await fetch("/?" + new URLSearchParams({"prompt": query, "genre": genre}));
+
+      if (!resp.ok) {
+        throw new Error(`Fetch failed with status: ${resp.status}`);
+      }
+
+      responseInfo = await resp.json();
+      const info = responseInfo.text;
+      const imgLink = responseInfo.imgLink;
+      displayImage(imgLink);
+
+      const formattedInfo = formatApiResponse(info);
+      updateInfoOnPage(formattedInfo);
+    } catch (error) {
+      console.error("There was an error", error);
+      responseInfo = { text: "An error has occurred! Please try again." };
+    } finally {
+      Loading = false;
+    }
   }
 
   function updateInfoOnPage(formattedInfo) {
@@ -34,7 +48,7 @@
     formattedOutput += `<strong>${title}</strong>\n`;
 
     if (lines.length > 1) {
-      formattedOutput += "<ul style='list-style-type: none;'>\n"; // Add this line
+      formattedOutput += "<ul style='list-style-type: none;'>\n";
       for (let i = 1; i < lines.length; i++) {
         const detail = lines[i].replace(/^\s*\*\s*/, '').trim();
         if (detail) {
@@ -49,9 +63,18 @@
 
 function handleSelectChange(event) {
     const selectedValue = event.target.value;
-    number = selectedValue;
+    genre = selectedValue;
   }
-  
+
+  function displayImage(imgLink) {
+    const imgElement = document.getElementById("img-display");
+
+    if (imgElement) {
+      imgElement.src = imgLink;
+      imgElement.style.display = "block";
+    }
+  }
+
 </script>
 
 <h1>Welcome to AnimeFinder</h1>
@@ -73,7 +96,7 @@ function handleSelectChange(event) {
   <p>Enter a Reference Anime(ex: "Like Naruto")</p>
   <input type="text" bind:value={query}>
   <button class="Bind-Query" on:click={onclick} disabled={Loading}>Search</button>
-
+<img id="img-display" alt="animePic">
 <div id="info-display"></div>
 
 <style>
@@ -106,7 +129,7 @@ function handleSelectChange(event) {
   
   form{
     text-align: center;
-    background-color: dimgrey;
+    background-color:lapt dimgrey;
     width: 15%;
   }
 
@@ -123,6 +146,7 @@ function handleSelectChange(event) {
     text-align: center;
     margin: 10px auto; 
     width: 100%;
+    font-size: 2em;
  }
 
  form.genreType select {
@@ -138,6 +162,13 @@ function handleSelectChange(event) {
  form.genreType option {
   background-color: darkslategrey;
   color: white;
+ }
+
+ img#img-display{
+  width: 20%;
+  height: 20%;
+  margin-left: auto;
+  margin-right: auto;
  }
 
 </style>
