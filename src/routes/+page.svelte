@@ -4,6 +4,7 @@
   let Loading = false;
   let genre = "";
   let title = "";
+  let image = "/goku.png";
 
   async function onclick() {
     try {
@@ -89,7 +90,10 @@ function hideLoadingSpinner() {
   }
 </script>
 
-<h1>Welcome to AnimeFinder</h1>
+<div id="background-container">
+<div id="background-image" style={`background-image: url(${image})`}> </div>
+  <h1>Welcome to AnimeFinder</h1>
+<!-- svelte-ignore a11y-img-redundant-alt -->
 <p>
   <p class="Shows">Select the Genre</p>
   <form class="genreType">
@@ -116,6 +120,8 @@ function hideLoadingSpinner() {
   </button>
   <img id="img-display" alt="animePic">
   <div id="info-display"></div>
+</div>
+
 
 <style>
   h1 {
@@ -143,6 +149,7 @@ function hideLoadingSpinner() {
     width: 15%;
     color: white;
     font-size: 1em;
+    opacity: 100%;
   }
   
   form{
@@ -275,4 +282,21 @@ function hideLoadingSpinner() {
   }
 }
 
+#background-image {
+  background-image: url(${image});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: -1; 
+  opacity: 0.3;
+}
+
+#background-container {
+  position: relative;
+}
 </style>
