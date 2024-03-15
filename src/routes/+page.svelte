@@ -296,7 +296,4 @@ function hideLoadingSpinner() {
   opacity: 0.3;
 }
 
-#background-container {
-  position: relative;
-}
 </style>

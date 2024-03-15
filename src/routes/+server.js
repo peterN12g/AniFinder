@@ -27,11 +27,12 @@ export async function GET({url}) {
 
 async function run(query,genre) { 
   const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-001" });
-  const prompt = "Suggest ONLY one " + genre + " ANIME show with a title and ONLY 3 descriptive short bullet points in a vertical list format " + query;
+  const prompt = "Suggest ONLY one " + genre + " ANIME show with a title and ONLY 3 descriptive short bullet points in a vertical list format WITH the first bullet point the IMDB star rating like " + query;
 
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const text = await response.text();
+  console.log(text);
   return text;
 }
 
