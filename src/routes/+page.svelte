@@ -109,7 +109,7 @@ function hideLoadingSpinner() {
       <option value="Romance">Romance</option>
     </select>
   </form>
-  <p>Enter a Reference Anime(ex: "Like Naruto")</p>
+  <p>Enter a Reference Anime(ex: "Naruto")</p>
   <input type="text" bind:value={query}>
   <button class="Bind-Query" on:click={onclick} disabled={Loading}>
     {#if Loading}
@@ -190,8 +190,8 @@ function hideLoadingSpinner() {
  }
 
  img#img-display{
-  width: 20%;
-  height: 20%;
+  width: 30%;
+  height: 30%;
   margin-left: auto;
   margin-right: auto;
  }

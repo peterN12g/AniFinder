@@ -12,7 +12,7 @@ export async function GET({url}) {
   const prompt = url.searchParams.get("prompt");
   const genre = url.searchParams.get("genre")
   const text = await run(prompt,genre);
-  const titleMatch = text.match(/- (.*?)(?:\n|$)/);
+  const titleMatch = text.match(/\*\*(?:\d+\.\d+\/10\s+)?(.*?)(?=\s*\*\*)/);
   const title = titleMatch ? (titleMatch[1].trim() + " poster") : null;
   console.log(title)
    const imgLink = await getImage(title);
