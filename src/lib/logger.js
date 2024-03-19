@@ -6,9 +6,9 @@ export const logger = createLogger({
       format.timestamp(),
       format.json(),
     ),
-    transports: [
-      new transports.File({ filename: 'error.log', level: 'error' }),
-      new transports.Console(),
-      new transports.File({ filename: 'api_logs.log' })
-    ],
+    // transports: [
+    //   new transports.File({ filename: 'error.log', level: 'error' }),
+    //   new transports.Console(),
+    //   new transports.File({ filename: 'api_logs.log' })
+    // ],
   });
