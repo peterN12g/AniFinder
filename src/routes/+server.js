@@ -3,7 +3,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { API_KEY } from "$env/static/private";
 import { GOOGLE_API_KEY } from "$env/static/private"
 import { customsearch_v1 } from 'googleapis';
-import { logger } from '$lib/logger'
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 
