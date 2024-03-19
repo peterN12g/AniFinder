@@ -1,15 +1,15 @@
 <script context="module">
+  import { logger } from './+server'
   let query = "";
   let info = "";
   let Loading = false;
   let genre = "";
   let title = "";
   let image = "/goku.png";
-
+  
   async function onclick() {
     try {
         Loading = true;
-        showLoadingSpinner();
 
         const resp = await fetch("/?" + new URLSearchParams({"prompt": query, "genre": genre}));
 
@@ -23,26 +23,13 @@
         displayImage(imgLink);
         const formattedInfo = formatApiResponse(info);
         updateInfoOnPage(formattedInfo);
+        logger.info('Successful API Call', { data: responseInfo });
     } catch (error) {
         console.error("There was an error", error);
         responseInfo = { text: "An error has occurred! Please try again." };
+        logger.error('Failed API Call', { error });
     } finally {
         Loading = false;
-        hideLoadingSpinner();
-    }
-}
-
-function showLoadingSpinner() {
-    const loadingDiv = document.getElementById("loading");
-    if (loadingDiv) {
-        loadingDiv.style.display = "inline-block";
-    }
-}
-
-function hideLoadingSpinner() {
-    const loadingDiv = document.getElementById("loading");
-    if (loadingDiv) {
-        loadingDiv.style.display = "none";
     }
 }
 
@@ -111,13 +98,7 @@ function hideLoadingSpinner() {
   </form>
   <p>Enter a Reference Anime(ex: "Naruto")</p>
   <input type="text" bind:value={query}>
-  <button class="Bind-Query" on:click={onclick} disabled={Loading}>
-    {#if Loading}
-      <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-    {:else}
-      Search
-    {/if}
-  </button>
+  <button class="Bind-Query" on:click={onclick} disabled={Loading}>Search</button>
   <img id="img-display" alt="animePic">
   <div id="info-display"></div>
 </div>
@@ -195,92 +176,6 @@ function hideLoadingSpinner() {
   margin-left: auto;
   margin-right: auto;
  }
-
-/* Loading Spinner CSS */
-.lds-roller {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-roller div {
-  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  transform-origin: 40px 40px;
-}
-.lds-roller div:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #fff;
-  margin: -4px 0 0 -4px;
-}
-.lds-roller div:nth-child(1) {
-  animation-delay: -0.036s;
-}
-.lds-roller div:nth-child(1):after {
-  top: 63px;
-  left: 63px;
-}
-.lds-roller div:nth-child(2) {
-  animation-delay: -0.072s;
-}
-.lds-roller div:nth-child(2):after {
-  top: 68px;
-  left: 56px;
-}
-.lds-roller div:nth-child(3) {
-  animation-delay: -0.108s;
-}
-.lds-roller div:nth-child(3):after {
-  top: 71px;
-  left: 48px;
-}
-.lds-roller div:nth-child(4) {
-  animation-delay: -0.144s;
-}
-.lds-roller div:nth-child(4):after {
-  top: 72px;
-  left: 40px;
-}
-.lds-roller div:nth-child(5) {
-  animation-delay: -0.18s;
-}
-.lds-roller div:nth-child(5):after {
-  top: 71px;
-  left: 32px;
-}
-.lds-roller div:nth-child(6) {
-  animation-delay: -0.216s;
-}
-.lds-roller div:nth-child(6):after {
-  top: 68px;
-  left: 24px;
-}
-.lds-roller div:nth-child(7) {
-  animation-delay: -0.252s;
-}
-.lds-roller div:nth-child(7):after {
-  top: 63px;
-  left: 17px;
-}
-.lds-roller div:nth-child(8) {
-  animation-delay: -0.288s;
-}
-.lds-roller div:nth-child(8):after {
-  top: 56px;
-  left: 12px;
-}
-@keyframes lds-roller {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 #background-image {
   background-image: url(${image});

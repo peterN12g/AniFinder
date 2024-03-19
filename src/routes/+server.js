@@ -3,10 +3,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { API_KEY } from "$env/static/private";
 import { GOOGLE_API_KEY } from "$env/static/private"
 import { customsearch_v1 } from 'googleapis';
-
+import { createLogger, transports, format } from 'winston';
 
 const genAI = new GoogleGenerativeAI(API_KEY);
-
 
 export async function GET({url}) {
   const prompt = url.searchParams.get("prompt");
@@ -14,9 +13,7 @@ export async function GET({url}) {
   const text = await run(prompt,genre);
   const titleMatch = text.match(/- (.*?)(?:\n|$)/);
   const title = titleMatch ? (titleMatch[1].trim() + " poster") : null;
-  console.log(title)
    const imgLink = await getImage(title);
-   console.log(imgLink)
    const responseInfo = {
     text: text,
     imgLink: imgLink
@@ -32,7 +29,6 @@ async function run(query,genre) {
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const text = await response.text();
-  console.log(text);
   return text;
 }
 
@@ -53,4 +49,17 @@ async function getImage(title) {
   return link;
 }
 
+const logger = createLogger({
+  level: 'info',
+  format: format.combine(
+    format.timestamp(),
+    format.json(),
+  ),
+  transports: [
+    new transports.File({ filename: 'error.log', level: 'error' }),
+    new transports.Console(),
+    new transports.File({ filename: 'api_logs.log' })
+  ],
+});
 
+export default logger;
