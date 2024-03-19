@@ -19,10 +19,10 @@ export async function GET({url}) {
     text: text,
     imgLink: imgLink
    };
-   logger.info("Successful API Call", JSON.stringify(responseInfo));
+  //  logger.info("Successful API Call", JSON.stringify(responseInfo));
   return new Response(JSON.stringify(responseInfo));
   } catch{
-    logger.error("Failed API Call", error)
+    // logger.error("Failed API Call", error)
     return new Response("Error occurred", { status: 500 });
   }
 }
@@ -52,10 +52,10 @@ async function getImage(title) {
     siteSearchFilter: "e",
   });
   let link = (result.data.items[0].link)
-  logger.info("Successful API Image Call" , link)
+  // logger.info("Successful API Image Call" , link)
   return link;
 } catch(error) {
-  logger.error("API Image Call Error", error.message)
+  // logger.error("API Image Call Error", error.message)
 
 }
 }
