@@ -2,7 +2,7 @@
   import { logger } from '$lib/logger'
   let query = "";
   let info = "";
-  let Loading = false;
+  let Loading = false
   let genre = "";
   let title = "";
   let image = "/goku.png";
