@@ -1,5 +1,4 @@
 <script context="module">
-  import { logger } from '$lib/logger'
   let query = "";
   let info = "";
   let Loading = false
@@ -23,11 +22,9 @@
         displayImage(imgLink);
         const formattedInfo = formatApiResponse(info);
         updateInfoOnPage(formattedInfo);
-        logger.info('Successful API Call', { data: responseInfo });
     } catch (error) {
         console.error("There was an error", error);
         responseInfo = { text: "An error has occurred! Please try again." };
-        logger.error('Failed API Call', { error });
     } finally {
         Loading = false;
     }
