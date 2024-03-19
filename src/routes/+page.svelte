@@ -1,5 +1,5 @@
 <script context="module">
-  import { logger } from './+server'
+  import { logger } from '$lib/logger'
   let query = "";
   let info = "";
   let Loading = false;
