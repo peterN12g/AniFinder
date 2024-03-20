@@ -21,7 +21,6 @@ export async function GET({url}) {
   //  logger.info("Successful API Call", JSON.stringify(responseInfo));
   return new Response(JSON.stringify(responseInfo));
   } catch (e) {
-    console.log(e)
     return new Response(e.toString(), { status: 500 });
   }
 }
