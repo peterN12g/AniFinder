@@ -22,8 +22,7 @@ export async function GET({url}) {
   return new Response(JSON.stringify(responseInfo));
   } catch (e) {
     console.log(e)
-    // logger.error("Failed API Call", error)
-    return new Response("Error occurred", { status: 500 });
+    return new Response(e.toString(), { status: 500 });
   }
 }
 
