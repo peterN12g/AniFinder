@@ -1,6 +1,8 @@
 //API call for Anime Information
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { API_KEY, CX, GOOGLE_API_KEY } from "$env/static/private";
+import { logger } from '$lib/logger'
+
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 
@@ -16,9 +18,10 @@ export async function GET({url}) {
     text: text,
     imgLink: imgLink
    };
-  //  logger.info("Successful API Call", JSON.stringify(responseInfo));
+   logger.info("Successful API Call", JSON.stringify(responseInfo));
   return new Response(JSON.stringify(responseInfo));
   } catch (e) {
+    logger.error("Error",e)
     return new Response(e.toString(), { status: 500 });
   }
 }
