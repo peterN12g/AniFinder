@@ -102,8 +102,8 @@
 <style>
   h1 {
     text-align: center;
-    background-color: #8cbcd0;
-    color: white;
+    background-color: #2c2c2c;
+    color: #4b6777;
   }
 
   p {
