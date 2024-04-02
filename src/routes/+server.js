@@ -1,7 +1,6 @@
-//API call for Anime Information
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { API_KEY, CX, GOOGLE_API_KEY } from "$env/static/private";
-// import { logger } from '$lib/logger'
+import { logger } from '$lib/logger'
 
 
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -26,7 +25,7 @@ export async function GET({url}) {
   }
 }
 
-
+//API call for Anime Information
 async function run(query,genre) { 
   const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-001" });
   const prompt = "Suggest ONLY one " + genre + " ANIME show with a title and ONLY 3 descriptive short bullet points in a vertical list format WITH the LAST bullet point being the IMDB star rating, like \"" + query + "\"";

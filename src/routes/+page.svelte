@@ -4,7 +4,6 @@
   let Loading = false
   let genre = "";
   let title = "";
-  let image = "/goku.png";
   
   async function onclick() {
     try {
@@ -75,7 +74,6 @@
 </script>
 
 <div id="background-container">
-<div id="background-image" style={`background-image: url(${image})`}> </div>
   <h1>Welcome to AnimeFinder</h1>
 <!-- svelte-ignore a11y-img-redundant-alt -->
 <p>
@@ -104,8 +102,7 @@
 <style>
   h1 {
     text-align: center;
-    background-color: steelblue;
-    color: Orange;
+    background-color: darkslategrey;
   }
 
   p {
