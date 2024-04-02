@@ -103,7 +103,7 @@
   h1 {
     text-align: center;
     background-color: #2c2c2c;
-    color: #4b6777;
+    color: #bbdbdf;
   }
 
   p {
@@ -148,7 +148,7 @@
     margin: 10px auto; 
     width: 100%;
     font-size: 2em;
-    color: #4b6777;
+    color: #bbdbdf;
  }
 
  form.genreType select {
