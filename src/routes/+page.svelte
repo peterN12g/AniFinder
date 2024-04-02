@@ -102,7 +102,8 @@
 <style>
   h1 {
     text-align: center;
-    background-color: darkslategrey;
+    background-color: #8cbcd0;
+    color: white;
   }
 
   p {
@@ -147,6 +148,7 @@
     margin: 10px auto; 
     width: 100%;
     font-size: 2em;
+    color: #4b6777;
  }
 
  form.genreType select {
@@ -170,19 +172,5 @@
   margin-left: auto;
   margin-right: auto;
  }
-
-#background-image {
-  background-image: url(${image});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100vh; 
-  position: fixed; 
-  top: 0;
-  left: 0;
-  z-index: -1; 
-  opacity: 0.3;
-}
 
 </style>

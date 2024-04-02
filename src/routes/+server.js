@@ -46,7 +46,7 @@ async function getImageTest(title){
     q: title,
     searchType: "image",
     imgType: "photo",
-    siteSearch: "http://www.kylelambert.com OR https://lookaside.instagram.com",
+    siteSearch: "http://www.kylelambert.com OR https://lookaside.instagram.com OR https://www.reddit.com",
     siteSearchFilter: "e",
   });
 
