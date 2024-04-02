@@ -1,7 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { API_KEY, CX, GOOGLE_API_KEY } from "$env/static/private";
-import { logger } from '$lib/logger'
-
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 
