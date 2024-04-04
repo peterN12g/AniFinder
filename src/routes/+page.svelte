@@ -102,8 +102,11 @@
 <style>
   h1 {
     text-align: center;
-    background-color: #2c2c2c;
     color: #bbdbdf;
+    background-color: black;
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   p {
