@@ -6,6 +6,7 @@
   let title = "";
   
   async function onclick() {
+    document.getElementById('Bind-Query').disabled = true;
     try {
         Loading = true;
 
@@ -25,6 +26,7 @@
         console.error("There was an error", error);
         responseInfo = { text: "An error has occurred! Please try again." };
     } finally {
+        document.getElementById('Bind-Query').disabled = false;
         Loading = false;
     }
 }
@@ -93,7 +95,7 @@
   </form>
   <p>Enter a Reference Anime(ex: "Naruto")</p>
   <input type="text" bind:value={query}>
-  <button class="Bind-Query" on:click={onclick} disabled={Loading}>Search</button>
+  <button id="Bind-Query" class="Bind-Query" on:click={onclick} disabled={Loading}>Search</button>
   <img id="img-display" alt="animePic">
   <div id="info-display"></div>
 </div>
