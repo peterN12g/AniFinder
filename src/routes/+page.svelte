@@ -22,6 +22,7 @@
         displayImage(imgLink);
         const formattedInfo = formatApiResponse(info);
         updateInfoOnPage(formattedInfo);
+        document.querySelector('.button-container').classList.remove('hidden');
     } catch (error) {
         console.error("There was an error", error);
         responseInfo = { text: "An error has occurred! Please try again." };
@@ -98,6 +99,9 @@
   <button id="Bind-Query" class="Bind-Query" on:click={onclick} disabled={Loading}>Search</button>
   <img id="img-display" alt="animePic">
   <div id="info-display"></div>
+</div>
+<div class="button-container hidden">
+<button class="List" onclick="addList(title)">Add to List</button>
 </div>
 
 
@@ -177,5 +181,19 @@
   margin-left: auto;
   margin-right: auto;
  }
+ .button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
+.hidden{
+  display: none;
+}
+
+button.List {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
 </style>
