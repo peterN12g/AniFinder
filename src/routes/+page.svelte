@@ -101,7 +101,7 @@
   <div id="info-display"></div>
 </div>
 <div class="button-container hidden">
-<button class="List" onclick="addList(title)">Add to List</button>
+<!-- <button class="List" onclick="addList(title)">Add to List</button> -->
 </div>
 
 
