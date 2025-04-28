@@ -20,15 +20,16 @@ export async function GET({ url }) {
     const text = await run(prompt, genre);
     console.log("Generated text:", text);
 
-    const titleMatch = text.match(/- (.*?)(?:\n|$)/);
-    const title = titleMatch ? `${titleMatch[1].trim()} poster` : null;
+    const lines = text.trim().split('\n');
+    const title = lines[0].trim();
 
-    if (!title) {
+    if (!title || title.startsWith('-')) {
       throw new Error("Could not extract title from response");
     }
-
-    const imgLink = await getImageTest(title);
-    console.log("Image link:", imgLink);
+    
+    const fullTitle = `${title} poster`;
+    const imgLink = await getImageTest(fullTitle);
+    console.log("extracted TITLE: " + fullTitle);
 
     const responseInfo = {
       text: text,
