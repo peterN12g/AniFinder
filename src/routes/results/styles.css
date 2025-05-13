@@ -1,0 +1,40 @@
+  #results-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  #info-display {
+    margin: 20px 0;
+  }
+  #img-display {
+    max-width: 50%;
+    height: 50%;
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+button:hover {
+    background-color: #0056b3;
+  }
+.poster {
+    display: flex;
+    flex-direction: column;
+}
+.query{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+li {
+  font-size: 1.2rem;
+  font-style: bold;
+}

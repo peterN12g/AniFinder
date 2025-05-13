@@ -1,0 +1,104 @@
+h1 {
+  text-align: center;
+  color: #bbdbdf;
+  background-color: black;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 1.1em;
+  text-align: left; 
+}
+
+button.Bind-Query {
+  display: flex;
+}
+
+input {
+  display: flex;
+  background-color: darkslategrey;
+  margin-top: 5px;
+  width: 15%;
+  color: white;
+  font-size: 1em;
+  opacity: 100%;
+}
+  
+form{
+  text-align: center;
+  background-color:lapt dimgrey;
+  width: 15%;
+}
+
+p.Shows{
+  text-align: left;
+  margin-bottom: -5px;
+}
+ 
+.genreType{
+position: relative;
+}
+
+div#info-display {
+  text-align: center;
+  margin: 10px auto; 
+  width: 100%;
+  font-size: 2em;
+  color: #bbdbdf;
+}
+
+form.genreType select {
+  color: white;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+  background-color: darkslategrey;
+}
+
+form.genreType option {
+  background-color: darkslategrey;
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.hidden{
+  display: none;  
+}
+
+button.List {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+#background-container {
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#background-container > * {
+  padding: 8px;
+}
+
+select,
+button {
+  margin: 10px;
+  padding: 8px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+
+}
