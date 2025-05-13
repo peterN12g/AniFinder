@@ -50,12 +50,14 @@
       <option value="Romance">Romance</option>
     </select>
   </form>
-  <label for="query">Enter a Reference Anime (e.g., "Naruto"):</label>
-  <input type="text" id="query" bind:value={query} />
-  <button id="Bind-Query" class="Bind-Query" on:click={onclick} disabled={Loading || !query.trim()}>
-    Search
-  </button>
+  <div class="input">
+    <label for="query">Enter a Reference Anime (e.g., "Naruto"):</label>
+    <input type="text" id="query" bind:value={query} />
+  </div>
+    <button id="Bind-Query" class="Bind-Query" on:click={onclick} disabled={Loading || !query.trim()}>Search</button>
   {#if Loading}
-    <p>Loading...</p>
+    <div class="loader-overlay">
+      <span class="loader"></span>
+    </div>
   {/if}
 </div>
