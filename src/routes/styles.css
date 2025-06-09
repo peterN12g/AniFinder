@@ -1,158 +1,89 @@
-h1 {
-  text-align: center;
-  color: #bbdbdf;
-  background-color: black;
-  height: 100%;
+body {
   margin: 0;
-  padding: 0;
-}
-
-p {
-  font-size: 1.1em;
-  text-align: left; 
-}
-
-button.Bind-Query {
-  display: flex;
-}
-
-input {
-  display: flex;
-  background-color: darkslategrey;
-  margin: 5px auto 0 auto;
-  width: 80%;
-  color: white;
-  font-size: 1em;
-  opacity: 100%;
-}
-  
-form{
-  text-align: center;
-  background-color:lapt dimgrey;
-}
-
-p.Shows{
-  text-align: left;
-  margin-bottom: -5px;
-}
- 
-.genreType{
-position: relative;
-display: flex;
-flex-direction: row;
-align-items: center;
-}
-
-div#info-display {
-  text-align: center;
-  margin: 10px auto; 
-  width: 100%;
-  font-size: 2em;
-  color: #bbdbdf;
-}
-
-form.genreType select {
-  color: white;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-  cursor: pointer;
-  user-select: none;
-  background-color: darkslategrey;
-}
-
-form.genreType option {
-  background-color: darkslategrey;
-  color: white;
-}
-
-.button-container {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #1b1c1e;
+  color: #e0f7fa;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-}
-
-.hidden{
-  display: none;  
-}
-
-button.List {
-  padding: 10px 20px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-#background-container {
-  padding: 20px;
   align-items: center;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  background: #2c2f33;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+h1 {
+  color: #bbdbdf;
+  font-size: 2.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+.search-form {
   display: flex;
   flex-direction: column;
-}
-
-#background-container > * {
-  padding: 8px;
+  gap: 1rem;
 }
 
 select,
-button {
-  margin: 10px;
-  padding: 8px;
+input {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #37474f;
+  color: white;
 }
 
-button:disabled {
-  background-color: #ccc;
+select:focus,
+input:focus {
+  outline: 2px solid #64ffda;
+}
+
+button.Bind-Query {
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #00bcd4;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button.Bind-Query:disabled {
+  background-color: #607d8b;
   cursor: not-allowed;
 }
 
-.loader {
-  font-size: 10px;
-  width: 1em;
-  height: 1em;
+button.Bind-Query:hover:enabled {
+  background-color: #0097a7;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top: 3px solid #00bcd4;
   border-radius: 50%;
-  position: relative;
-  text-indent: -9999em;
-  animation: mulShdSpin 1.1s infinite ease;
-  transform: translateZ(0);
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
 }
 
-.loader-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  backdrop-filter: blur(2px);
-}
-
-@keyframes mulShdSpin {
-  0%,
-  100% {
-    box-shadow: 0em -2.6em 0em 0em #ffffff, 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.5), -1.8em -1.8em 0 0em rgba(255,255,255, 0.7);
-  }
-  12.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.7), 1.8em -1.8em 0 0em #ffffff, 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.5);
-  }
-  25% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.5), 1.8em -1.8em 0 0em rgba(255,255,255, 0.7), 2.5em 0em 0 0em #ffffff, 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
-  }
-  37.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.5), 2.5em 0em 0 0em rgba(255,255,255, 0.7), 1.75em 1.75em 0 0em #ffffff, 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
-  }
-  50% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.5), 1.75em 1.75em 0 0em rgba(255,255,255, 0.7), 0em 2.5em 0 0em #ffffff, -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
-  }
-  62.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.5), 0em 2.5em 0 0em rgba(255,255,255, 0.7), -1.8em 1.8em 0 0em #ffffff, -2.6em 0em 0 0em rgba(255,255,255, 0.2), -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
-  }
-  75% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.5), -1.8em 1.8em 0 0em rgba(255,255,255, 0.7), -2.6em 0em 0 0em #ffffff, -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
-  }
-  87.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.5), -2.6em 0em 0 0em rgba(255,255,255, 0.7), -1.8em -1.8em 0 0em #ffffff;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

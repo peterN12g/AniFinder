@@ -1,40 +1,98 @@
-  #results-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  #info-display {
-    margin: 20px 0;
-  }
-  #img-display {
-    max-width: 50%;
-    height: 50%;
-    margin: 20px 0;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-button:hover {
-    background-color: #0056b3;
-  }
-.poster {
-    display: flex;
+.results-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #2c2f33;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  color: #e0f7fa;
+  text-align: center;
+}
+
+.results-header {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #bbdbdf;
+}
+
+.results-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.anime-poster {
+  max-width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.info-card {
+  background-color: #1f2123;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  max-width: 400px;
+  flex: 1;
+  text-align: left;
+}
+
+.result-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #81ecec;
+  text-align: center;
+}
+
+.result-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.result-list li {
+  font-size: 1rem;
+  margin: 0.4rem 0;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.result-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #81ecec;
+}
+
+.back-button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .results-grid {
     flex-direction: column;
-}
-.query{
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
-li {
-  font-size: 1.2rem;
-  font-style: bold;
+    align-items: center;
+  }
+
+  .anime-poster {
+    max-width: 90%;
+  }
+
+  .info-card {
+    width: 90%;
+  }
 }

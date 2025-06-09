@@ -1,7 +1,9 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { fade } from 'svelte/transition';
   import './styles.css';
+
   let formattedInfo = '';
   let imgLink = '';
   let imgAlt = 'Anime poster';
@@ -12,17 +14,17 @@
 
     if (lines.length > 0) {
       const title = lines[0].replace(/^\*\s*/, '').trim();
-      formattedOutput += `<strong>${title}</strong>\n`;
+      formattedOutput += `<h2 class="result-title">${title}</h2>\n`;
 
       if (lines.length > 1) {
-        formattedOutput += "<ul style='list-style-type: none;'>\n";
+        formattedOutput += `<ul class="result-list">\n`;
         for (let i = 1; i < lines.length; i++) {
           const detail = lines[i].replace(/^\s*\*\s*/, '').trim();
           if (detail) {
             formattedOutput += `<li>${detail}</li>\n`;
           }
         }
-        formattedOutput += '</ul>\n';
+        formattedOutput += `</ul>\n`;
       }
     }
     return formattedOutput.trim();
@@ -40,19 +42,22 @@
   });
 </script>
 
-<div id="results-container">
-  <h1>Anime Search Results</h1>
-  {#if formattedInfo}
-    <div id="info-display">
-      {@html formattedInfo}
-    </div>
-  {:else}
-    <p>No results available.</p>
-  {/if}
-  <div class="poster">
+<main class="results-container">
+  <h1 class="results-header">Your Anime Results</h1>
+
+  <div class="results-grid">
     {#if imgLink}
-        <img id="img-display" src={imgLink} alt={imgAlt} loading="lazy" />
+      <img id="img-display" class="anime-poster" src={imgLink} alt={imgAlt} loading="lazy" />
     {/if}
-    <button class="query" on:click={() => goto('/')}>Back to Search</button>
+
+    {#if formattedInfo}
+      <div id="info-display" class="info-card" transition:fade>
+        {@html formattedInfo}
+      </div>
+    {:else}
+      <p class="empty-message">No results available.</p>
+    {/if}
   </div>
-</div>
+
+  <button class="back-button" on:click={() => goto('/')}>🔙 Back to Search</button>
+</main>
