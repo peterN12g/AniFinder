@@ -96,3 +96,25 @@
     width: 90%;
   }
 }
+
+.save-button {
+  margin-left: 1rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.save-button:hover:not(:disabled) {
+  background-color: #43a047;
+  transform: scale(1.03);
+}
+
+.save-button:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}

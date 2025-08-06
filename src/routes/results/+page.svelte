@@ -7,6 +7,8 @@
   let formattedInfo = '';
   let imgLink = '';
   let imgAlt = 'Anime poster';
+  let saved = false;
+  let token = localStorage.getItem('token');
 
   function formatApiResponse(info) {
     let formattedOutput = '';
@@ -28,6 +30,34 @@
       }
     }
     return formattedOutput.trim();
+  }
+
+  async function saveSearch() {
+    const stored = JSON.parse(sessionStorage.getItem('animeResponse'));
+    const genre = sessionStorage.getItem('genre');
+    const prompt = sessionStorage.getItem('prompt');
+
+    const res = await fetch('/api/searches', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        prompt,
+        genre,
+        result: stored.text
+      })
+    });
+
+    if (res.ok) saved = true;
+    console.log('Sending search with:', {
+  token,
+  prompt,
+  genre,
+  result: stored?.text
+});
+
   }
 
   onMount(() => {
@@ -59,5 +89,12 @@
     {/if}
   </div>
 
-  <button class="back-button" on:click={() => goto('/')}>🔙 Back to Search</button>
+  <div class="results-actions">
+    <button class="back-button" on:click={() => goto('/')}>🔙 Back to Search</button>
+    {#if token}
+      <button on:click={saveSearch} disabled={saved} class="save-button">
+        {saved ? '✅ Saved' : '💾 Save Search'}
+      </button>
+    {/if}
+  </div>
 </main>

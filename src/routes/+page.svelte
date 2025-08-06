@@ -66,6 +66,8 @@
       const imgLink = responseInfo.imgLink || '';
       const title = responseInfo.title || 'Anime poster';
 
+      sessionStorage.setItem('prompt', query);
+      sessionStorage.setItem('genre', genre);
       sessionStorage.setItem('animeResponse', JSON.stringify({ text: info, imgLink, title }));
       goto('/results');
     } catch (error) {
@@ -109,7 +111,9 @@
       {/if}
     </form>
   {:else}
-    <p>Welcome, {displayName}!</p>
+    <div class="welcome-banner">
+      <span class="wave">👋</span> Welcome back, <span class="username">{displayName}</span>!
+    </div>
 
     <form class="search-form" on:submit|preventDefault={onclick}>
       <label for="showGenre">Select Genre:</label>

@@ -167,3 +167,37 @@ button.Bind-Query:hover:enabled {
   text-align: center;
   margin-top: -0.5rem;
 }
+
+.welcome-banner {
+  font-size: 1.3rem;
+  color: #a7ffeb;
+  background: rgba(100, 255, 218, 0.1);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  font-weight: 500;
+  box-shadow: 0 0 10px rgba(100, 255, 218, 0.15);
+  animation: popIn 0.4s ease-out;
+}
+
+.welcome-banner .username {
+  font-weight: bold;
+  color: #64ffda;
+}
+
+.welcome-banner .wave {
+  font-size: 1.4rem;
+  margin-right: 0.4rem;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
