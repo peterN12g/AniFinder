@@ -47,6 +47,16 @@
   }
 }
 
+  function handleLogout() {
+    token = '';
+    displayName = '';
+    username = '';
+    password = '';
+    localStorage.removeItem('token');
+    localStorage.removeItem('displayName');
+    authError = 'Successfully logged out';
+  }
+
   async function onclick() {
     if(!token) {
       authError = 'Please log in to search.';
@@ -82,6 +92,14 @@
 </script>
 
 <main class="container">
+  <div class="user-menu">
+    <button class="user-icon" on:click|preventDefault={(e) => { e.currentTarget.nextElementSibling.classList.toggle('active'); }}>
+      👤
+    </button>
+    <div class="dropdown">
+      <button class="logout-button" on:click={handleLogout}>Logout</button>
+    </div>
+  </div>
   <h1>AnimeFinder</h1>
   <p class="subtitle">Discover similar anime by genre and example!</p>
 
@@ -112,7 +130,9 @@
     </form>
   {:else}
     <div class="welcome-banner">
-      <span class="wave">👋</span> Welcome back, <span class="username">{displayName}</span>!
+      <div class="welcome-text">
+        <span class="wave">👋</span> Welcome back, <span class="username">{displayName}</span>!
+      </div>
     </div>
 
     <form class="search-form" on:submit|preventDefault={onclick}>

@@ -17,6 +17,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
   text-align: center;
+  position: relative;
 }
 
 h1 {
@@ -200,4 +201,58 @@ button.Bind-Query:hover:enabled {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.user-menu {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.user-icon {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #7289da;
+  padding: 0.25rem;
+}
+
+.user-icon:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #2c2f33;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  min-width: 120px;
+  padding: 0.25rem 0;
+}
+
+.dropdown.active {
+  display: block;
+}
+
+.logout-button {
+  padding: 0.5rem 1rem;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.2s;
+  margin: 0.25rem 0;
+}
+
+.logout-button:hover {
+  background-color: #d9363e;
 }
