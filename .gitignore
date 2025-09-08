@@ -12,3 +12,4 @@ static/favicon.png
 src/routes/test/+page.svelte
 api_logs.log
 error.log
+.vercel/
