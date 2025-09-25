@@ -4,6 +4,8 @@
   import { fade } from 'svelte/transition';
   import './styles.css';
 
+  const API_BASE_URL = 'http://52.73.20.74:3000';
+
   let formattedInfo = '';
   let imgLink = '';
   let imgAlt = 'Anime poster';
@@ -39,25 +41,32 @@
     const genre = sessionStorage.getItem('genre');
     const prompt = sessionStorage.getItem('prompt');
 
-    const res = await fetch('/api/searches', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        prompt,
-        genre,
-        result: stored.text
-      })
-    });
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/save-search`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          prompt,
+          genre,
+          result: stored.text
+        })
+      });
 
-    if (res.ok) {
-      saved = true;
-      await loadSavedSearches();
+      if (res.ok) {
+        const data = await res.json();
+        console.log('Search saved successfully:', data);
+        saved = true;
+        await loadSavedSearches();
+      } else {
+        console.error('Failed to save search:', res.statusText);
+      }
+    } catch (error) {
+      console.error('Error saving search:', error);
     }
+
     console.log('Sending search with:', {
-      token,
       prompt,
       genre,
       result: stored?.text
@@ -65,36 +74,40 @@
   }
 
   async function loadSavedSearches() {
-    if (!token) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/saved-searches`);
 
-    const res = await fetch('/api/searches', {
-      headers: {
-        'Authorization': `Bearer ${token}`
+      if (res.ok) {
+        const data = await res.json();
+        savedSearches = data.searches.map(search => ({
+          ...search,
+          formattedResult: formatApiResponse(search.result)
+        }));
+      } else {
+        console.error('Failed to load saved searches:', res.statusText);
       }
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      savedSearches = data.map(search => ({
-        ...search,
-        formattedResult: formatApiResponse(search.result)
-      }));
+    } catch (error) {
+      console.error('Error loading saved searches:', error);
     }
   }
 
   async function deleteSearch(searchId) {
-    if (!token || !searchId) return;
+    //no delete endpoint, yet console log
+    console.log('Delete functionality not implemented yet on EC2 API');
+    
+    /* 
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/saved-searches/${searchId}`, {
+        method: 'DELETE'
+      });
 
-    const res = await fetch(`/api/searches/${searchId}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`
+      if (res.ok) {
+        await loadSavedSearches();
       }
-    });
-
-    if (res.ok) {
-      await loadSavedSearches();
+    } catch (error) {
+      console.error('Error deleting search:', error);
     }
+    */
   }
 
   onMount(() => {
@@ -129,17 +142,15 @@
 
   <div class="results-actions">
     <button class="back-button" on:click={() => goto('/')}>🔙 Back to Search</button>
-    {#if token}
-      <button on:click={saveSearch} disabled={saved} class="save-button">
-        {saved ? '✅ Saved' : '💾 Save Search'}
-      </button>
-      <button on:click={() => (showSavedSearches = !showSavedSearches)} class="toggle-saved-button">
-        {showSavedSearches ? '🔼 Hide Saved Searches' : '🔽 Show Saved Searches'}
-      </button>
-    {/if}
+    <button on:click={saveSearch} disabled={saved} class="save-button">
+      {saved ? '✅ Saved' : '💾 Save Search'}
+    </button>
+    <button on:click={() => (showSavedSearches = !showSavedSearches)} class="toggle-saved-button">
+      {showSavedSearches ? '🔼 Hide Saved Searches' : '🔽 Show Saved Searches'}
+    </button>
   </div>
 
-  {#if token && showSavedSearches && savedSearches.length > 0}
+  {#if showSavedSearches && savedSearches.length > 0}
     <div class="saved-searches-section" transition:fade>
       <h2 class="saved-searches-title">Saved Searches</h2>
       <div class="saved-searches-grid">
@@ -149,12 +160,14 @@
             <div class="saved-search-content">
               {@html search.formattedResult}
             </div>
-            <button class="delete-button" on:click={() => deleteSearch(search.id)}>❌ Delete</button>
+            <button class="delete-button" on:click={() => deleteSearch(search.id)} disabled>
+              ❌ Delete (Coming Soon)
+            </button>
           </div>
         {/each}
       </div>
     </div>
-  {:else if token && showSavedSearches && savedSearches.length === 0}
+  {:else if showSavedSearches && savedSearches.length === 0}
     <p class="empty-message">No saved searches yet.</p>
   {/if}
 </main>
