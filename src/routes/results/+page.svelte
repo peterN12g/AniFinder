@@ -10,33 +10,31 @@
   let imgLink = '';
   let imgAlt = 'Anime poster';
   let saved = false;
-  let token = localStorage.getItem('token');
   let savedSearches = [];
   let showSavedSearches = false;
 
   function formatApiResponse(info) {
     let formattedOutput = '';
-    const lines = info.split('\n');
 
-    if (lines.length > 0) {
-      const title = lines[0].replace(/^\*\s*/, '').trim();
-      formattedOutput += `<h2 class="result-title">${title}</h2>\n`;
-
-      if (lines.length > 1) {
-        formattedOutput += `<ul class="result-list">\n`;
-        for (let i = 1; i < lines.length; i++) {
-          const detail = lines[i].replace(/^\s*\*\s*/, '').trim();
-          if (detail) {
-            formattedOutput += `<li>${detail}</li>\n`;
-          }
-        }
-        formattedOutput += `</ul>\n`;
-      }
+    if (info.title) {
+      formattedOutput += `<h2 class="result-title">${info.title}</h2>\n`;
     }
+
+    if (info.bullets && Array.isArray(info.bullets)) {
+      formattedOutput += `<ul class="result-list">\n`;
+      for (const detail of info.bullets) {
+        const cleaned = detail.replace(/^\*\s*/, '').trim();
+        if (cleaned) {
+          formattedOutput += `<li>${cleaned}</li>\n`;
+        }
+      }
+      formattedOutput += `</ul>\n`;
+    }
+
     return formattedOutput.trim();
   }
 
-  async function saveSearch() {
+  async function saveSearch(e) {
     e.preventDefault();
     const stored = JSON.parse(sessionStorage.getItem('animeResponse'));
     const genre = sessionStorage.getItem('genre');
@@ -45,13 +43,11 @@
     try {
       const res = await fetch(`${API_BASE_URL}/api/save-search`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt,
           genre,
-          result: stored.text
+          result: stored   // ✅ send full result
         })
       });
 
@@ -67,11 +63,7 @@
       console.error('Error saving search:', error);
     }
 
-    console.log('Sending search with:', {
-      prompt,
-      genre,
-      result: stored?.text
-    });
+    console.log('Sending search with:', { prompt, genre, result: stored });
   }
 
   async function loadSavedSearches() {
@@ -82,7 +74,11 @@
         const data = await res.json();
         savedSearches = data.searches.map(search => ({
           ...search,
-          formattedResult: formatApiResponse(search.result)
+          formattedResult: formatApiResponse({
+            title: search.title,
+            bullets: search.bullets,
+            imgLink: search.imgLink
+          })
         }));
       } else {
         console.error('Failed to load saved searches:', res.statusText);
@@ -93,28 +89,13 @@
   }
 
   async function deleteSearch(searchId) {
-    //no delete endpoint, yet console log
     console.log('Delete functionality not implemented yet on EC2 API');
-    
-    /* 
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/saved-searches/${searchId}`, {
-        method: 'DELETE'
-      });
-
-      if (res.ok) {
-        await loadSavedSearches();
-      }
-    } catch (error) {
-      console.error('Error deleting search:', error);
-    }
-    */
   }
 
   onMount(() => {
     const responseData = JSON.parse(sessionStorage.getItem('animeResponse') || '{}');
-    if (responseData.text) {
-      formattedInfo = formatApiResponse(responseData.text);
+    if (responseData.title || responseData.bullets) {
+      formattedInfo = formatApiResponse(responseData);
       imgLink = responseData.imgLink || '';
       imgAlt = responseData.title || 'Anime poster';
     } else {
@@ -125,8 +106,6 @@
 </script>
 
 <main class="results-container">
-  <h1 class="results-header">Your Anime Results</h1>
-
   <div class="results-grid">
     {#if imgLink}
       <img id="img-display" class="anime-poster" src={imgLink} alt={imgAlt} loading="lazy" />

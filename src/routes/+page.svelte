@@ -26,26 +26,26 @@
           username,
           password,
           displayName
-      })
-    });
-    const data = await res.json();
-    if(!res.ok) throw new Error(data.message);
+        })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.message);
 
-    if(isRegister) {
-      isRegister = false;
-      authError = 'Successfully Registered! Please Log In.';
-    } else {
-      token = data.token;
-      displayName = data.displayName;
-      localStorage.setItem('token', token);
-      localStorage.setItem('displayName', displayName);
+      if(isRegister) {
+        isRegister = false;
+        authError = 'Successfully Registered! Please Log In.';
+      } else {
+        token = data.token;
+        displayName = data.displayName;
+        localStorage.setItem('token', token);
+        localStorage.setItem('displayName', displayName);
+      }
+    } catch(err) {
+      authError = err.message;
+    } finally {
+      Loading = false;
     }
-  } catch(err) {
-    authError = err.message;
-  } finally {
-    Loading = false;
   }
-}
 
   function handleLogout() {
     token = '';
@@ -72,17 +72,32 @@
       }
 
       const responseInfo = await resp.json();
-      const info = responseInfo.text || 'No information available';
-      const imgLink = responseInfo.imgLink || '';
-      const title = responseInfo.title || 'Anime poster';
+      console.log("Search response:", responseInfo);
 
       sessionStorage.setItem('prompt', query);
       sessionStorage.setItem('genre', genre);
-      sessionStorage.setItem('animeResponse', JSON.stringify({ text: info, imgLink, title }));
+      sessionStorage.setItem(
+        'animeResponse',
+        JSON.stringify({
+          title: responseInfo.title || 'Unknown Title',
+          bullets: Array.isArray(responseInfo.bullets)
+            ? responseInfo.bullets
+            : JSON.parse(responseInfo.bullets || '[]'),
+          imgLink: responseInfo.imgLink || ''
+        })
+      );
+
       goto('/results');
     } catch (error) {
       console.error('There was an error', error);
-      sessionStorage.setItem('animeResponse', JSON.stringify({ text: 'An error occurred! Please try again.', imgLink: '' }));
+      sessionStorage.setItem(
+        'animeResponse',
+        JSON.stringify({
+          title: 'Error',
+          bullets: ['An error occurred! Please try again.'],
+          imgLink: ''
+        })
+      );
       goto('/results');
     } finally {
       document.getElementById('Bind-Query').disabled = false;
@@ -93,14 +108,14 @@
 
 <main class="container">
   {#if token}
-  <div class="user-menu">
-    <button class="user-icon" on:click|preventDefault={(e) => { e.currentTarget.nextElementSibling.classList.toggle('active'); }}>
-      👤
-    </button>
-    <div class="dropdown">
-      <button class="logout-button" on:click={handleLogout}>Logout</button>
+    <div class="user-menu">
+      <button class="user-icon" on:click|preventDefault={(e) => { e.currentTarget.nextElementSibling.classList.toggle('active'); }}>
+        👤
+      </button>
+      <div class="dropdown">
+        <button class="logout-button" on:click={handleLogout}>Logout</button>
+      </div>
     </div>
-  </div>
   {/if}
   <h1>AnimeFinder</h1>
   <p class="subtitle">Discover similar anime by genre and example!</p>
