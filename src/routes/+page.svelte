@@ -65,7 +65,7 @@
     document.getElementById('Bind-Query').disabled = true;
     try {
       Loading = true;
-      const resp = await fetch(`/?${new URLSearchParams({ prompt: query, genre })}`);
+      const resp = await fetch(`/api/search?${new URLSearchParams({ prompt: query, genre })}`);
 
       if (!resp.ok) {
         throw new Error(`Fetch failed with status: ${resp.status}`);
@@ -92,6 +92,7 @@
 </script>
 
 <main class="container">
+  {#if token}
   <div class="user-menu">
     <button class="user-icon" on:click|preventDefault={(e) => { e.currentTarget.nextElementSibling.classList.toggle('active'); }}>
       👤
@@ -100,6 +101,7 @@
       <button class="logout-button" on:click={handleLogout}>Logout</button>
     </div>
   </div>
+  {/if}
   <h1>AnimeFinder</h1>
   <p class="subtitle">Discover similar anime by genre and example!</p>
 

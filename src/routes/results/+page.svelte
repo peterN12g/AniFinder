@@ -4,7 +4,7 @@
   import { fade } from 'svelte/transition';
   import './styles.css';
 
-  const API_BASE_URL = 'http://52.73.20.74:3000';
+  const API_BASE_URL = 'https://api.anifinder.peternguyen.me';
 
   let formattedInfo = '';
   let imgLink = '';
@@ -37,6 +37,7 @@
   }
 
   async function saveSearch() {
+    e.preventDefault();
     const stored = JSON.parse(sessionStorage.getItem('animeResponse'));
     const genre = sessionStorage.getItem('genre');
     const prompt = sessionStorage.getItem('prompt');
