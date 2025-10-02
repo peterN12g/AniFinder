@@ -89,8 +89,21 @@
   }
 
   async function deleteSearch(searchId) {
-    console.log('Delete functionality not implemented yet on EC2 API');
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/saved-searches/${searchId}`, {
+        method: 'DELETE'
+      });
+
+      if (res.ok) {
+        await loadSavedSearches(); // reload after delete
+      } else {
+        console.error('Failed to delete search:', res.statusText);
+      }
+    } catch (error) {
+      console.error('Error deleting search:', error);
+    }
   }
+
 
   onMount(() => {
     const responseData = JSON.parse(sessionStorage.getItem('animeResponse') || '{}');
@@ -140,8 +153,8 @@
             <div class="saved-search-content">
               {@html search.formattedResult}
             </div>
-            <button class="delete-button" on:click={() => deleteSearch(search.id)} disabled>
-              ❌ Delete (Coming Soon)
+            <button class="delete-button" on:click={() => deleteSearch(search.id)}>
+              ❌ Delete
             </button>
           </div>
         {/each}
