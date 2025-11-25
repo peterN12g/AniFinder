@@ -129,6 +129,14 @@
 
       if (res.ok) {
         await loadSavedSearches();
+        const current = JSON.parse(sessionStorage.getItem('animeResponse') || '{}');
+        const justDeleted = savedSearches.find(s => s.id === searchId);
+
+      if (justDeleted &&
+          justDeleted.title === current.title &&
+          justDeleted.prompt === sessionStorage.getItem('prompt')) {
+        saved = false;
+      }
       } else {
         console.error('Failed to delete search:', res.statusText);
       }
