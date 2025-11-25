@@ -12,6 +12,26 @@
   let saved = false;
   let savedSearches = [];
   let showSavedSearches = false;
+  let token = '';
+
+  onMount(() => {
+    token = localStorage.getItem("token") || "";
+    if (!token) {
+      console.error("No token found");
+    }
+
+    const responseData = JSON.parse(sessionStorage.getItem('animeResponse') || '{}');
+
+    if (responseData.title || responseData.bullets) {
+      formattedInfo = formatApiResponse(responseData);
+      imgLink = responseData.imgLink || '';
+      imgAlt = responseData.title || 'Anime poster';
+    } else {
+      goto('/');
+    }
+
+    loadSavedSearches();
+  });
 
   function formatApiResponse(info) {
     let formattedOutput = '';
@@ -43,11 +63,14 @@
     try {
       const res = await fetch(`${API_BASE_URL}/api/save-search`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
         body: JSON.stringify({
           prompt,
           genre,
-          result: stored   // ✅ send full result
+          result: stored
         })
       });
 
@@ -57,18 +80,23 @@
         saved = true;
         await loadSavedSearches();
       } else {
-        console.error('Failed to save search:', res.statusText);
+        const err = await res.json().catch(() => ({}));
+        console.error('Failed to save search:', err);
       }
     } catch (error) {
       console.error('Error saving search:', error);
     }
-
-    console.log('Sending search with:', { prompt, genre, result: stored });
   }
 
   async function loadSavedSearches() {
+    if (!token) return;
+
     try {
-      const res = await fetch(`${API_BASE_URL}/api/saved-searches`);
+      const res = await fetch(`${API_BASE_URL}/api/saved-searches`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
 
       if (res.ok) {
         const data = await res.json();
@@ -89,13 +117,18 @@
   }
 
   async function deleteSearch(searchId) {
+    if (!token) return;
+
     try {
       const res = await fetch(`${API_BASE_URL}/api/saved-searches/${searchId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
       });
 
       if (res.ok) {
-        await loadSavedSearches(); // reload after delete
+        await loadSavedSearches();
       } else {
         console.error('Failed to delete search:', res.statusText);
       }
@@ -103,19 +136,6 @@
       console.error('Error deleting search:', error);
     }
   }
-
-
-  onMount(() => {
-    const responseData = JSON.parse(sessionStorage.getItem('animeResponse') || '{}');
-    if (responseData.title || responseData.bullets) {
-      formattedInfo = formatApiResponse(responseData);
-      imgLink = responseData.imgLink || '';
-      imgAlt = responseData.title || 'Anime poster';
-    } else {
-      goto('/');
-    }
-    loadSavedSearches();
-  });
 </script>
 
 <main class="results-container">
