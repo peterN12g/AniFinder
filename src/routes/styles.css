@@ -216,6 +216,8 @@ input:focus {
   cursor: pointer;
   color: #7289da;
   padding: 0.25rem;
+  background-color: lightslategray;
+  border-radius: 15px;
 }
 
 .user-icon:hover {
